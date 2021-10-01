@@ -11,10 +11,16 @@ namespace TiendaServicios.Api.Autor.ManejadorRabbit
 {
     public class EmailEventoManejador : IEventoManejador<EmailEventoQueue>
     {
+        ILogger<EmailEventoManejador> _logger;
+        public EmailEventoManejador(ILogger<EmailEventoManejador> logger) {
+            _logger = logger;
+        }
+
         public EmailEventoManejador() { }
                 
         public Task Handle(EmailEventoQueue @event)
         {
+            _logger.LogInformation(@event.Titulo);
             return Task.CompletedTask;
         }
     }
