@@ -116,7 +116,7 @@ namespace TiendaServicios.Api.Libro.Tests
 
 
 
-        // Comente este test hasta saber como crear un mock para Rabbit
+        // Comente este test hasta saber como crear un mock para RabbitMQ
         //[Fact]
         //public async void GuardarLibro() {
         //    System.Diagnostics.Debugger.Launch();
