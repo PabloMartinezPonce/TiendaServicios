@@ -32,7 +32,12 @@ namespace TiendaServicios.Api.Libro
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IRabbitEventBus, RabbitEventBus>();
+            //services.AddTransient<IRabbitEventBus, RabbitEventBus>();
+            services.AddSingleton<IRabbitEventBus, RabbitEventBus>(sp => {
+                var scoopeFactory = sp.GetRequiredService<IServiceScopeFactory>();
+                return new RabbitEventBus(sp.GetService<IMediator>(), scoopeFactory);
+            });
+
             services.AddControllers().AddFluentValidation(cfg => cfg.RegisterValidatorsFromAssemblyContaining<Nuevo>());
 
             services.AddDbContext<ContextoLibreria>(opt =>

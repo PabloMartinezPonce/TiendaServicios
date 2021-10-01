@@ -35,7 +35,12 @@ namespace TiendaServicios.Api.Autor
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddTransient<IRabbitEventBus, RabbitEventBus>();
+            services.AddSingleton<IRabbitEventBus, RabbitEventBus>(sp => {
+                var scoopeFactory = sp.GetRequiredService<IServiceScopeFactory>();
+                return new RabbitEventBus(sp.GetService<IMediator>(), scoopeFactory);
+            });
+
+            services.AddTransient<EmailEventoManejador>();
 
             services.AddTransient<IEventoManejador<EmailEventoQueue>, EmailEventoManejador>();
 
